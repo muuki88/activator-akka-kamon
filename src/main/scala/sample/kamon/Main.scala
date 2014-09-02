@@ -12,8 +12,8 @@ object Main extends App {
 
   val generator = system.actorOf(Props[MessageGeneratorActor], "artifical")
 
-  generator ! ConstantLoad(Schedule(numberGenerator, GenerateNumber))
-  generator ! ConstantLoad(Schedule(numberGenerator, GenerateSecureNumber))
-  generator ! Peak(Schedule(numberGenerator, GenerateNumber))
-  generator ! Peak(Schedule(numberGenerator, GenerateSecureNumber))
+  generator ! ConstantLoad(Schedule(numberGenerator, GenerateNumber, 5000))
+  generator ! ConstantLoad(Schedule(numberGenerator, GenerateSecureNumber, 1000))
+  generator ! Peak(Schedule(numberGenerator, GenerateNumber, 100000))
+  generator ! Peak(Schedule(numberGenerator, GenerateSecureNumber, 25000))
 }

@@ -17,8 +17,8 @@ class MessageGeneratorActor extends Actor {
   var load: ActorRef = _
 
   override def preStart() {
-    peak = context.actorOf(Props(classOf[PeakGenerator], maxPeak), "peak:generator")
-    load = context.actorOf(Props(classOf[ConstantLoadGenerator], constantLoad), "load:generator")
+    peak = context.actorOf(Props[PeakGenerator], "peak:generator")
+    load = context.actorOf(Props[ConstantLoadGenerator], "load:generator")
   }
 
   def receive = {
@@ -33,12 +33,11 @@ class MessageGeneratorActor extends Actor {
 trait MessageGenerator extends Actor with ActorLogging {
 
   override def receive = {
-    case Schedule(target, msg) => schedule(target, msg)
-    case msg                   => log warning s"unkown: $msg"
-    //    case _                     => // ignore answers
+    case Schedule(target, msg, times) => schedule(target, msg, times)
+    case msg                          => log warning s"unkown: $msg"
   }
 
-  def schedule(target: ActorRef, message: Any)
+  def schedule(target: ActorRef, message: Any, times: Int)
 
 }
 
@@ -48,7 +47,7 @@ object MessageGenerator {
   case class Peak[A](schedule: A)
   case class ConstantLoad(schedule: Schedule)
 
-  case class Schedule(target: ActorRef, msg: Any)
+  case class Schedule(target: ActorRef, msg: Any, times: Int)
 
 }
 
@@ -56,14 +55,14 @@ object MessageGenerator {
  * Generates peaks in random intervals
  * @param numMessages - how many messages should be in a peak
  */
-class PeakGenerator(numMessages: Int) extends MessageGenerator {
+class PeakGenerator extends MessageGenerator {
 
   import context._
 
-  def schedule(target: ActorRef, message: Any) {
+  def schedule(target: ActorRef, message: Any, numMessages: Int) {
     log info s"schedule peak $message"
     val wait = (random * 10.0).toLong
-    system.scheduler.scheduleOnce(wait seconds, self, Schedule(target, message))
+    system.scheduler.scheduleOnce(wait seconds, self, Schedule(target, message, numMessages))
     for (i <- 0 to numMessages) {
       target ! message
     }
@@ -74,11 +73,11 @@ class PeakGenerator(numMessages: Int) extends MessageGenerator {
  * Generates a constant message load
  * @param msgPerSecond - how many messages should be sent per second
  */
-class ConstantLoadGenerator(msgPerSecond: Int) extends MessageGenerator {
+class ConstantLoadGenerator extends MessageGenerator {
 
   import context._
 
-  def schedule(target: ActorRef, message: Any) {
+  def schedule(target: ActorRef, message: Any, msgPerSecond: Int) {
     system.scheduler.schedule(
       initialDelay = 0 seconds,
       interval = (1000 / msgPerSecond) milliseconds,
