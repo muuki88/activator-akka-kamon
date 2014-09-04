@@ -1,6 +1,22 @@
 # Akka Kamon
 
-TODO description
+For a detail description read [the blog post](http://mukis.de/pages/monitoring-akka-with-kamon/).
+
+# Run it
+
+Run the docker container with all the statsd backend/frontend stuff
+
+```bash
+docker run -v /etc/localtime:/etc/localtime:ro -p 80:80 -p 8125:8125/udp -p 8126:8126 -p 8083:8083 -p 8086:8086 -p 8084:8084 --name kamon-grafana-dashboard muuki88/grafana_graphite:latest
+```
+
+In another terminal start the application
+
+```
+sbt run
+```
+
+Go to [localhost](http://localhost) and configure your dashboard.
 
 # Setup Activator
 
