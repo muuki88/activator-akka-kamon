@@ -13,6 +13,7 @@ val kamonVersion = "0.5.1-SNAPSHOT"
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % "2.3.10",
   "io.kamon" %% "kamon-core" % kamonVersion,
+  "io.kamon" %% "kamon-akka" % kamonVersion,
   "io.kamon" %% "kamon-statsd" % kamonVersion,
   "io.kamon" %% "kamon-log-reporter" % kamonVersion,
   "io.kamon" %% "kamon-system-metrics" % kamonVersion,
