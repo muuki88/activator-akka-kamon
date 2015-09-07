@@ -18,6 +18,8 @@ sbt run
 
 Go to [localhost](http://localhost) and configure your dashboard.
 
+![Dashboard Example](https://raw.githubusercontent.com/wiki/muuki88/activator-akka-kamon/example-dashboard.png)
+
 # Setup Activator
 
 1. [Download Typesafe Activator](http://typesafe.com/platform/getstarted) (or copy it over from a USB)
