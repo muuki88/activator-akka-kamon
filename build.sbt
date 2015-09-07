@@ -2,19 +2,20 @@ import com.typesafe.sbt.SbtAspectj._
 
 name := """activator-akka-kamon"""
 
-version := "2.3.5"
+version := "2.3.12"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.7"
 
-val kamonVersion = "0.3.4"
+val kamonVersion = "0.5.1"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-actor" % "2.3.5",
+  "com.typesafe.akka" %% "akka-actor" % "2.3.12",
   "io.kamon" %% "kamon-core" % kamonVersion,
+  "io.kamon" %% "kamon-akka" % kamonVersion,
   "io.kamon" %% "kamon-statsd" % kamonVersion,
   "io.kamon" %% "kamon-log-reporter" % kamonVersion,
   "io.kamon" %% "kamon-system-metrics" % kamonVersion,
-  "org.aspectj" % "aspectjweaver" % "1.8.1"
+  "org.aspectj" % "aspectjweaver" % "1.8.5"
 )
 
 aspectjSettings

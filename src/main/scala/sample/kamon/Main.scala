@@ -3,8 +3,11 @@ package sample.kamon
 import akka.actor._
 import MessageGenerator._
 import RandomNumberActor._
+import kamon.Kamon
 
 object Main extends App {
+
+  Kamon.start()
 
   val system = ActorSystem("application")
 
