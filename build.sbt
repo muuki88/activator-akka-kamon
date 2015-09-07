@@ -2,7 +2,7 @@ import com.typesafe.sbt.SbtAspectj._
 
 name := """activator-akka-kamon"""
 
-version := "2.3.10"
+version := "2.3.12"
 
 scalaVersion := "2.11.7"
 
